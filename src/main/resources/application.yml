@@ -1,0 +1,149 @@
+spring:
+  application:
+    name: triaige-srv-mcp-ai
+
+  # Configurações sensíveis (buckets, filas, credenciais de banco, token interno) ficam fora
+  # deste repositório, em um arquivo por ambiente no projeto triaige-srv-mcp-ai-config. O
+  # import é opcional: se o diretório/arquivo não existir (ex: ambiente local sem o repo
+  # clonado ao lado), os valores padrão definidos abaixo continuam valendo. Mesma convenção
+  # do triaige-srv-orchestrator.
+  config:
+    import: "optional:file:${CONFIG_REPO_PATH:../triaige-srv-mcp-ai-config/}"
+
+  datasource:
+    url: ${DB_URL:jdbc:mysql://localhost:3307/triaige_srv_mcp_ai?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true}
+    username: ${DB_USERNAME:triaige}
+    password: ${DB_PASSWORD:triaige}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    open-in-view: false
+    show-sql: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        type:
+          preferred_uuid_jdbc_type: CHAR
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+
+  ai:
+    mcp:
+      server:
+        name: triaige-srv-mcp-ai
+        version: 1.0.0
+        type: SYNC
+        # STATELESS: cada requisição HTTP é independente (sem handshake de sessão nem
+        # affinity de SSE) — mais simples para um cliente atrás de load balancer, e
+        # testável com uma única requisição HTTP (ex: Postman), sem precisar manter uma
+        # conexão SSE aberta. Alternativa ao padrão SSE do starter, adequado porque T5 é
+        # uma tool única, sem necessidade de estado entre chamadas.
+        protocol: STATELESS
+        instructions: >
+          Expoe a tool jurisprudence_query (T5) para consulta de jurisprudencia com cache,
+          usada por servicos de raciocinio de IA durante a triagem de casos juridicos.
+        capabilities:
+          tool: true
+          resource: false
+          prompt: false
+          completion: false
+
+server:
+  port: ${SERVER_PORT:8084}
+
+# Propriedades específicas do pipeline MCP (spec seções 5, 6, 7).
+mcp:
+  schema-version-supported: "1.0"
+  queue:
+    docs-preprocessing-queue-url: ${DOCS_PREPROCESSING_QUEUE_URL:http://localhost:4566/000000000000/triaige-docs-preprocessing}
+    consumer:
+      enabled: ${Q2_CONSUMER_ENABLED:true}
+      poll-interval-ms: ${Q2_POLL_INTERVAL_MS:5000}
+      wait-time-seconds: ${Q2_WAIT_TIME_SECONDS:20}
+      max-messages: ${Q2_MAX_MESSAGES:10}
+  ocr:
+    supported-content-types: application/pdf,image/png,image/jpeg,image/tiff
+    poll-initial-delay-ms: 2000
+    poll-max-delay-ms: 15000
+    poll-timeout-ms: 300000
+    retry-queue-url: ${OCR_RETRY_QUEUE_URL:http://localhost:4566/000000000000/triaige-mcp-ocr-retry}
+    retry-consumer:
+      enabled: ${OCR_RETRY_CONSUMER_ENABLED:true}
+      poll-interval-ms: ${OCR_RETRY_POLL_INTERVAL_MS:10000}
+      wait-time-seconds: ${OCR_RETRY_WAIT_TIME_SECONDS:10}
+      max-messages: ${OCR_RETRY_MAX_MESSAGES:10}
+    retry-delays-seconds: 30,120,600
+    max-receive-count: 3
+  s3:
+    raw-documents-bucket: ${RAW_DOCUMENTS_BUCKET:bucket-triaige-raw-certificacoes}
+    trusted-documents-bucket: ${TRUSTED_DOCUMENTS_BUCKET:bucket-triaige-trusted-certificacoes}
+  summarization:
+    threshold-tokens: ${MCP_SUMMARIZATION_THRESHOLD_TOKENS:6000}
+    threshold-pages: ${MCP_SUMMARIZATION_THRESHOLD_PAGES:15}
+    summary-max-tokens: ${MCP_SUMMARY_MAX_TOKENS:1500}
+  callback:
+    orchestrator-base-url: ${ORCHESTRATOR_BASE_URL:http://localhost:8080}
+    path-template: /api/orchestrator/v1/sessions/{sessionId}/mcp-result
+    internal-token: ${MCP_INTERNAL_TOKEN:dev-local-internal-token}
+    connect-timeout-ms: 5000
+    read-timeout-ms: 10000
+    retry-delays-ms: 5000,30000,120000
+    fallback-queue-url: ${MCP_CALLBACK_DLQ_QUEUE_URL:http://localhost:4566/000000000000/triaige-mcp-callback-dlq}
+  jurisprudence:
+    provider: mockapi_io
+    endpoint: ${JURISPRUDENCE_API_ENDPOINT:https://6a2ecdd9c9776ca6c0c4f537.mockapi.io/jurisprudence-mock/jurisprudences}
+    timeout-ms: 5000
+    cache-ttl-days: 7
+
+# Propriedades da Fase 3 (spec-fase3-mcp-ai.md, seções 2, 4, 5) — endpoint POST
+# /api/ai/v1/analyze. Chave de nível raiz "ai", sem relação com "spring.ai.mcp" acima (que
+# é do starter do servidor MCP, T5, Fase 2) — namespaces distintos, mesma palavra por
+# coincidência.
+ai:
+  idempotency:
+    ttl-hours: 24
+  analysis:
+    timeout-ms: ${ANALYSIS_TIMEOUT_MS:120000}
+    max-tool-calls: 3
+  gemini:
+    api-key: ${GEMINI_API_KEY:}
+    model: ${GEMINI_MODEL:gemini-2.5-flash}
+    fallback-model: ${GEMINI_FALLBACK_MODEL:gemini-2.5-flash-lite}
+    endpoint: ${GEMINI_ENDPOINT:https://generativelanguage.googleapis.com/v1beta}
+    timeout-ms: 60000
+    retry-delays-ms: 2000,8000,20000
+    circuit-breaker-failure-threshold: 5
+    circuit-breaker-open-ms: 120000
+  internal:
+    analyze-token: ${MCP_ANALYZE_TOKEN:dev-local-analyze-token}
+
+aws:
+  region: ${AWS_REGION:us-east-1}
+  sqs:
+    endpoint: ${AWS_SQS_ENDPOINT:}
+  s3:
+    endpoint: ${AWS_S3_ENDPOINT:}
+  textract:
+    endpoint: ${AWS_TEXTRACT_ENDPOINT:}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: when-authorized
+  cloudwatch:
+    metrics:
+      export:
+        enabled: ${CLOUDWATCH_METRICS_ENABLED:false}
+        namespace: Triaige/MCP
+        step: 1m
+
+logging:
+  level:
+    br.com.triaige: ${LOG_LEVEL:INFO}
+    org.springframework.web: WARN
+    org.hibernate.SQL: WARN

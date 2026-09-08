@@ -1,0 +1,57 @@
+services:
+
+  # ── triaige-srv-mcp-ai ──────────────────────────────────────────────────────
+  # Sem LocalStack: SQS/S3 apontam para recursos AWS reais (provisionados via Terraform em
+  # triaige-infra), configurados via AWS_* no .env. Deixe AWS_SQS_ENDPOINT/AWS_S3_ENDPOINT/
+  # AWS_TEXTRACT_ENDPOINT em branco para usar os endpoints reais da região configurada
+  # (exige AWS_ACCESS_KEY_ID/AWS_SECRET_ACCESS_KEY/AWS_SESSION_TOKEN válidos no .env).
+  srv-mcp-ai:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: triaige-srv-mcp-ai
+    restart: unless-stopped
+    environment:
+      # DB_URL/DB_USERNAME/DB_PASSWORD vêm inteiros do .env (não montados aqui) porque o
+      # teste E2E aponta para o schema do orchestrator em vez do MySQL próprio deste
+      # serviço — ver comentário no .env.
+      DB_URL: jdbc:mysql://host.docker.internal:3306/${MYSQL_DATABASE}?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      AWS_REGION: ${AWS_REGION}
+      AWS_SQS_ENDPOINT: ${AWS_SQS_ENDPOINT}
+      AWS_S3_ENDPOINT: ${AWS_S3_ENDPOINT}
+      AWS_TEXTRACT_ENDPOINT: ${AWS_TEXTRACT_ENDPOINT}
+      # Se preenchidas, as variáveis AWS_* têm precedência sobre ~/.aws.
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_SESSION_TOKEN: ${AWS_SESSION_TOKEN}
+      AWS_PROFILE: ${AWS_PROFILE:-default}
+      AWS_SHARED_CREDENTIALS_FILE: /home/appuser/.aws/credentials
+      AWS_CONFIG_FILE: /home/appuser/.aws/config
+      RAW_DOCUMENTS_BUCKET: ${RAW_DOCUMENTS_BUCKET}
+      TRUSTED_DOCUMENTS_BUCKET: ${TRUSTED_DOCUMENTS_BUCKET}
+      DOCS_PREPROCESSING_QUEUE_URL: ${DOCS_PREPROCESSING_QUEUE_URL}
+      OCR_RETRY_QUEUE_URL: ${OCR_RETRY_QUEUE_URL}
+      OCR_RETRY_CONSUMER_ENABLED: ${OCR_RETRY_CONSUMER_ENABLED}
+      MCP_CALLBACK_DLQ_QUEUE_URL: ${MCP_CALLBACK_DLQ_QUEUE_URL}
+      ORCHESTRATOR_BASE_URL: ${ORCHESTRATOR_BASE_URL}
+      MCP_INTERNAL_TOKEN: ${MCP_INTERNAL_TOKEN}
+      # Fase 4: shared secret do endpoint /api/ai/v1/analyze (direção Orchestrator -> mcp-ai).
+      # Deve ser o mesmo valor configurado em MCP_ANALYZE_TOKEN no .env do orchestrator.
+      MCP_ANALYZE_TOKEN: ${MCP_ANALYZE_TOKEN}
+      JURISPRUDENCE_API_ENDPOINT: ${JURISPRUDENCE_API_ENDPOINT}
+      # Fase 3 (spec-fase3-mcp-ai.md) — POST /api/ai/v1/analyze, mesmo serviço/porta.
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+      GEMINI_MODEL: ${GEMINI_MODEL}
+      GEMINI_FALLBACK_MODEL: ${GEMINI_FALLBACK_MODEL}
+    volumes:
+      # O Dockerfile executa a aplicação como appuser, não como root.
+      - ${HOME}/.aws:/home/appuser/.aws:ro
+    ports:
+      - "${SRV_MCP_AI_PORT}:8084"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8084/actuator/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 10

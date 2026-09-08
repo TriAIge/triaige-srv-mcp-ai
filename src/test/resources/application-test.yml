@@ -1,0 +1,9 @@
+# Perfil "test" — usado por slice tests (@DataJpaTest) contra H2 embutido. O schema aqui
+# vem do Hibernate ddl-auto a partir das entidades.
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
