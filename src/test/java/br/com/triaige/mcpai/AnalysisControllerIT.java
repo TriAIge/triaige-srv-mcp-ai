@@ -30,7 +30,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
- * Fase 4, spec seções 5, 11: 401 sem/com token errado, 200 com token válido (Gemini
+ * 401 sem/com token errado, 200 com token válido (Gemini
  * mockado via {@code @MockBean} — chamar o Gemini real em CI não é viável), e replay de
  * idempotência (mesmo {@code Idempotency-Key} não reprocessa).
  */

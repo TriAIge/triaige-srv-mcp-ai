@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/** Um item de jurisprudência, tanto na resposta de mockapi.io quanto no output de T5 (spec seção 7). */
+/** Um item de jurisprudência, tanto na resposta de mockapi.io quanto no output de T5. */
 @Data
 @Builder
 @NoArgsConstructor

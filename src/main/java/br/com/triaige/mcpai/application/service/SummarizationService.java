@@ -19,8 +19,8 @@ import java.util.UUID;
 import java.util.regex.Pattern;
 
 /**
- * T4 — Resumo de Evidências longas (spec seção 5.6), condicional (seção 5.5). Sumarização
- * extrativa heurística, SEM chamada a LLM externo (decisão registrada na seção 2.3): pontua
+ * T4 — Resumo de Evidências longas, condicional. Sumarização
+ * extrativa heurística, SEM chamada a LLM externo: pontua
  * sentenças por presença de termos jurídicos/datas/valores monetários e por posição
  * (primeira/última página com peso maior), seleciona as de maior pontuação até o teto
  * configurado, e preserva a ORDEM ORIGINAL das sentenças selecionadas (não reordena por

@@ -17,9 +17,9 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- * T5 — tool MCP {@code jurisprudence_query} (spec seção 7), exposta via protocolo MCP
+ * T5 — tool MCP {@code jurisprudence_query}, exposta via protocolo MCP
  * (porta do servidor configurada em {@code server.port}) para consumo sob demanda por um
- * serviço de raciocínio de IA durante a triagem (fora do escopo desta fase).
+ * serviço de raciocínio de IA durante a triagem.
  */
 @Slf4j
 @Component
@@ -45,9 +45,9 @@ public class JurisprudenceQueryTool {
 
     /**
      * Mesma lógica de {@link #jurisprudenceQuery}, mas também devolve o id do registro
-     * {@code ai_tool_calls} gravado para esta chamada — usado pelo raciocínio da Fase 3
+     * {@code ai_tool_calls} gravado para esta chamada — usado pelo raciocínio
      * ({@code GeminiReasoningService}) para preencher {@code jurisprudenceCallId} na
-     * resposta de {@code POST /api/ai/v1/analyze} (spec Fase 3, seção 4.3). O método
+     * resposta de {@code POST /api/ai/v1/analyze}. O método
      * exposto ao protocolo MCP ({@link #jurisprudenceQuery}) não muda de contrato — continua
      * devolvendo só {@link JurisprudenceQueryResult}, para não afetar consumidores externos
      * da tool.

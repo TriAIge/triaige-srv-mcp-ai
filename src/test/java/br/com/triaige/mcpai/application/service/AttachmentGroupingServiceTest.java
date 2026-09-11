@@ -22,7 +22,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
- * T3 (spec seção 5.4/5.5, Definition of Done): ordem de concatenação correta com 1, 2 e N
+ * T3 (Definition of Done): ordem de concatenação correta com 1, 2 e N
  * partes, e roteamento T3->T4 configurável testado nos dois limiares (tokens e páginas).
  */
 class AttachmentGroupingServiceTest {

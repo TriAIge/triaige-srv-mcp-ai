@@ -22,7 +22,7 @@ import software.amazon.awssdk.services.sqs.model.CreateQueueRequest;
  * Base de testes de integração do mcp-ai: MySQL (schema gerado pelo Hibernate a partir das
  * entidades JPA, {@code ddl-auto=create-drop} — sem Flyway) + LocalStack (SQS + S3) — mesmo
  * padrão de {@code AbstractIntegrationTest} do triaige-srv-orchestrator. Não existia
- * scaffolding de {@code @SpringBootTest} neste módulo antes da Fase 4 (as 5 suítes de teste
+ * scaffolding de {@code @SpringBootTest} neste módulo antes (as 5 suítes de teste
  * pré-existentes cobrem só serviços isolados do pipeline T1-T4).
  */
 @Testcontainers

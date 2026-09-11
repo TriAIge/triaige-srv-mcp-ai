@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/** Spec Fase 3, seção 4 — chamado pelo triaige-srv-orchestrator após receber um mcp-result COMPLETED/PARTIALLY_COMPLETED. */
+/** Chamado pelo triaige-srv-orchestrator após receber um mcp-result COMPLETED/PARTIALLY_COMPLETED. */
 @RestController
 @RequestMapping("/api/ai/v1")
 @RequiredArgsConstructor

@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-/** Output schema de T5 (spec seção 7) — retorno serializado automaticamente pela tool MCP. */
+/** Output schema de T5 — retorno serializado automaticamente pela tool MCP. */
 @Data
 @Builder
 @NoArgsConstructor

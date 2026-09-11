@@ -30,7 +30,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
- * Cobre a extensão da Fase 4 (spec seção 5) ao gate de retry de formato: confianca fora de
+ * Cobre a extensão ao gate de retry de formato: confianca fora de
  * [0,100] e nivelAtendimentoSugerido fora do enum recebem o mesmo tratamento de
  * INVALID_REPORT_FORMAT/1 retry de geração que já existia para JSON não-parseável.
  */

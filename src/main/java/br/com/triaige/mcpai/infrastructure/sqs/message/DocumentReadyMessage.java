@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Contrato Q2 (triaige-docs-preprocessing) — spec da Fase 1, seção 7.2. Deve espelhar
+ * Contrato Q2 (triaige-docs-preprocessing). Deve espelhar
  * exatamente {@code DocumentReadyMessage} do triaige-srv-orchestrator (produtor desta
  * mensagem) campo a campo para que a (de)serialização Jackson seja compatível.
  */

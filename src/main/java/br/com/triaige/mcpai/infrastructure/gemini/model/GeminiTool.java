@@ -22,7 +22,7 @@ public class GeminiTool {
     public static class FunctionDeclaration {
         private String name;
         private String description;
-        /** JSON Schema (tipo OBJECT) dos parâmetros — spec Fase 3, seção 5.3. */
+        /** JSON Schema (tipo OBJECT) dos parâmetros. */
         private Map<String, Object> parameters;
     }
 }

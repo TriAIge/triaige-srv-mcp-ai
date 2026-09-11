@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
-/** Mensagem de triaige-mcp-ocr-retry (spec seção 5.2). */
+/** Mensagem de triaige-mcp-ocr-retry. */
 @Data
 @Builder
 @NoArgsConstructor

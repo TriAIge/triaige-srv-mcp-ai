@@ -35,12 +35,12 @@ import java.util.concurrent.TimeoutException;
 import java.util.stream.Collectors;
 
 /**
- * Orquestra o {@code POST /api/ai/v1/analyze} (spec Fase 3, seção 4.2): valida
- * processedGroups, lê os objetos S3 trusted (já escritos por este mesmo serviço na Fase 2),
+ * Orquestra o {@code POST /api/ai/v1/analyze}: valida
+ * processedGroups, lê os objetos S3 trusted (já escritos por este mesmo serviço),
  * monta o contexto, raciocina com o Gemini (incluindo function calling em processo de
- * jurisprudence_query), valida o relatório contra o schema da seção 6 e grava a auditoria
+ * jurisprudence_query), valida o relatório contra o schema e grava a auditoria
  * em ai_tool_calls (tool_name=llm_analysis). Toda a execução roda sob um timeout total
- * ({@code ai.analysis.timeout-ms}, spec seção 5.4).
+ * ({@code ai.analysis.timeout-ms}).
  */
 @Slf4j
 @Component
@@ -135,7 +135,7 @@ public class AnalyzeSessionUseCase {
     }
 
     /**
-     * Regra da spec Fase 3, seção 6, estendida pela Fase 4, seção 5: 1 retry de geração se o
+     * Regra: 1 retry de geração se o
      * relatório não validar — não só o parse estrutural (JSON inválido), mas também
      * {@code confianca} fora de [0,100] e {@code nivelAtendimentoSugerido} fora do enum. Se
      * persistir após o retry, INVALID_REPORT_FORMAT.
@@ -158,11 +158,34 @@ public class AnalyzeSessionUseCase {
     private boolean isValidFormat(String reportJsonText) {
         GeminiReportDto raw;
         try {
-            raw = objectMapper.readValue(reportJsonText, GeminiReportDto.class);
+            raw = objectMapper.readValue(stripMarkdownFence(reportJsonText), GeminiReportDto.class);
         } catch (Exception e) {
             return false;
         }
         return isConfiancaValid(raw) && isNivelAtendimentoValid(raw);
+    }
+
+    /**
+     * O Gemini às vezes devolve o relatório envolto em cerca de código markdown
+     * ({@code ```json ... ```}) mesmo com {@code responseMimeType=application/json} pedido —
+     * comportamento não-determinístico conhecido do modelo, não um erro de geração. Sem isso,
+     * um relatório perfeitamente válido era rejeitado só por causa do backtick inicial, gastando
+     * o único retry disponível e chegando a INVALID_REPORT_FORMAT com conteúdo bom.
+     */
+    private String stripMarkdownFence(String text) {
+        if (text == null) {
+            return null;
+        }
+        String trimmed = text.strip();
+        if (!trimmed.startsWith("```")) {
+            return trimmed;
+        }
+        int firstNewline = trimmed.indexOf('\n');
+        trimmed = firstNewline >= 0 ? trimmed.substring(firstNewline + 1) : trimmed.substring(3);
+        if (trimmed.endsWith("```")) {
+            trimmed = trimmed.substring(0, trimmed.length() - 3);
+        }
+        return trimmed.strip();
     }
 
     private boolean isConfiancaValid(GeminiReportDto raw) {
@@ -192,7 +215,7 @@ public class AnalyzeSessionUseCase {
                                                  Map<UUID, String> nomesArquivoPorGrupo) {
         GeminiReportDto raw;
         try {
-            raw = objectMapper.readValue(reasoningResult.reportJsonText(), GeminiReportDto.class);
+            raw = objectMapper.readValue(stripMarkdownFence(reasoningResult.reportJsonText()), GeminiReportDto.class);
         } catch (Exception e) {
             throw new InvalidReportFormatException("Relatório do Gemini não pôde ser interpretado: " + e.getMessage());
         }
@@ -231,7 +254,7 @@ public class AnalyzeSessionUseCase {
                 .build();
     }
 
-    /** Regras de validação da spec Fase 3, seção 6. */
+    /** Regras de validação. */
     private void validate(GeminiReportDto raw, ReasoningResult reasoningResult,
                            List<AnalysisRequest.ProcessedGroupDto> processedGroups) {
         if (raw.getRecomendacao() == null
@@ -260,9 +283,9 @@ public class AnalyzeSessionUseCase {
     }
 
     /**
-     * Spec Fase 3, seção 4.2, passo 2-3: lê cada objeto trusted e monta o contexto ordenado
-     * por attachmentGroupId (ordem de chegada). Fase 4: na mesma passagem, também coleta os
-     * nomes de arquivo originais de cada grupo (spec seção 6, NOME_ARQUIVO_NN) — nunca vai
+     * Lê cada objeto trusted e monta o contexto ordenado
+     * por attachmentGroupId (ordem de chegada). Na mesma passagem, também coleta os
+     * nomes de arquivo originais de cada grupo (NOME_ARQUIVO_NN) — nunca vai
      * para o prompt (custaria tokens e risco de eco incorreto), só é injetado no relatório
      * depois do parse, em {@link #buildRelatorio}.
      */

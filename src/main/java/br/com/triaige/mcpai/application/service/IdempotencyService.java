@@ -23,8 +23,7 @@ import java.util.UUID;
 import java.util.function.Supplier;
 
 /**
- * Suporte a idempotência para o endpoint {@code POST /api/ai/v1/analyze} (spec Fase 3,
- * seção 4 — "mesma semântica da Fase 1"): registra (idempotencyKey, endpoint, requestHash,
+ * Suporte a idempotência para o endpoint {@code POST /api/ai/v1/analyze}: registra (idempotencyKey, endpoint, requestHash,
  * responseBody, statusCode) e, em reenvio com a mesma chave e mesmo payload, retorna a
  * resposta original sem reexecutar efeitos colaterais (não rechama o Gemini). Mesma chave
  * com payload diferente resulta em 409 IDEMPOTENCY_KEY_CONFLICT. Cópia adaptada de

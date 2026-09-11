@@ -1,6 +1,6 @@
 package br.com.triaige.mcpai.application.service;
 
-/** Saída de T4 (spec seção 5.6). */
+/** Saída de T4. */
 public record SummarizationResult(String summaryText, int originalCharCount, int summaryCharCount) {
 
     public double compressionRate() {

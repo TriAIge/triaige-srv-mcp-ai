@@ -13,7 +13,7 @@ import java.time.Duration;
 import java.util.List;
 
 /**
- * Cliente HTTP para a API mock de jurisprudência (spec seção 7) — timeout 5s, 1 retry em
+ * Cliente HTTP para a API mock de jurisprudência — timeout 5s, 1 retry em
  * timeout/5xx. O provedor real ({@code https://6a2ecdd9c9776ca6c0c4f537.mockapi.io/jurisprudence-mock})
  * devolve itens no formato {@link MockApiProviderItem} ({@code title/court/caseNumber/summary/url/legalArea}),
  * mapeado aqui para o contrato interno {@link JurisprudenceItem} ({@code titulo/ementa/fonte/url})

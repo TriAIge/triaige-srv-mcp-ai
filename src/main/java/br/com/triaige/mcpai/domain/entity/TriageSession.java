@@ -10,7 +10,7 @@ import java.util.UUID;
 
 /**
  * Espelha triage_sessions (owned pelo triaige-srv-orchestrator). O MCP só lê esta tabela
- * para validar a sessão e obter lawFirmId/protocolo/correlationId (spec seção 3) — não
+ * para validar a sessão e obter lawFirmId/protocolo/correlationId — não
  * mapeia relações JPA para tabelas de outro serviço (law_firms, api_credentials).
  */
 @Entity

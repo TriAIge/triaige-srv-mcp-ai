@@ -11,7 +11,7 @@ import java.util.UUID;
 
 /**
  * Fonte da verdade para toda chamada de tool (T1-T5). request_payload/response_payload
- * NUNCA contêm texto bruto/anonimizado ou PII — apenas metadados (spec seção 2.4).
+ * NUNCA contêm texto bruto/anonimizado ou PII — apenas metadados.
  */
 @Entity
 @Table(name = "ai_tool_calls")

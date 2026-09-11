@@ -18,7 +18,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 
 /**
- * Fecha o gap de segurança da Fase 3 (spec Fase 4, seção 11): {@code POST /api/ai/v1/analyze}
+ * Fecha o gap de segurança: {@code POST /api/ai/v1/analyze}
  * não validava nenhuma credencial. Mesmo desenho do gêmeo no Orchestrator
  * ({@code InternalTokenAuthFilter}, direção mcp-ai→Orchestrator) — não há Spring Security
  * neste serviço, então o bean é auto-registrado pelo Boot como filtro de servlet; o

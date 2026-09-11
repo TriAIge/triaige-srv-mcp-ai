@@ -16,7 +16,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * T5 (spec seção 7, Definition of Done): cache hit verificável — mesma consulta normalizada
+ * T5 (Definition of Done): cache hit verificável — mesma consulta normalizada
  * (case/acentuação/espaços) produz o mesmo query_hash e retorna do cache sem novo provider call.
  * Perfil "test" (src/test/resources/application-test.yml): ddl-auto=create-drop contra o H2
  * embutido deste slice test.

@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 import java.util.UUID;
 
-/** Spec Fase 3, seção 4.1 — processedGroups/failedDocuments espelham o callback do MCP (Fase 2, seção 6), repassados sem transformação pelo Orchestrator. */
+/** processedGroups/failedDocuments espelham o callback do MCP, repassados sem transformação pelo Orchestrator. */
 @Data
 @Builder
 @NoArgsConstructor

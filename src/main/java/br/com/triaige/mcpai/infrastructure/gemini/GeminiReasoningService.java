@@ -22,14 +22,13 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
- * Laço de function calling do Gemini com a tool {@code jurisprudence_query} (spec Fase 3,
- * seções 2.4, 5.1, 5.3). Ao atingir {@code ai.analysis.max-tool-calls} chamadas, o próximo
+ * Laço de function calling do Gemini com a tool {@code jurisprudence_query}. Ao atingir {@code ai.analysis.max-tool-calls} chamadas, o próximo
  * request ao Gemini é enviado SEM a declaração da tool — o modelo fica impossibilitado de
  * chamá-la de novo (mais robusto que confiar só na instrução do prompt de sistema) e é
  * forçado a concluir com o que já tem.
  *
  * <p>A tool é chamada EM PROCESSO via {@link JurisprudenceQueryTool#query} — não por HTTP/MCP
- * — já que este é o mesmo serviço que a expõe via protocolo MCP (T5, Fase 2). Isso também
+ * — já que este é o mesmo serviço que a expõe via protocolo MCP (T5). Isso também
  * resolve de forma direta o id de auditoria: {@code JurisprudenceQueryTool.query} já devolve
  * o {@code ai_tool_calls.id} do registro que ele mesmo grava, sem precisar de um registro
  * paralelo.

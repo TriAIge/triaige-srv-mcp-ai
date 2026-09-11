@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 
-/** Métricas da spec seção 9, namespace CloudWatch Triaige/MCP (via management.cloudwatch.metrics.export). */
+/** Métricas — namespace CloudWatch Triaige/MCP (via management.cloudwatch.metrics.export). */
 @Component
 @RequiredArgsConstructor
 public class McpMetrics {
@@ -41,7 +41,7 @@ public class McpMetrics {
         registry.counter("McpCallbackFailureCount").increment();
     }
 
-    // --- Fase 3 (spec-fase3-mcp-ai.md, seção 8) — análise com Gemini ---
+    // --- Análise com Gemini ---
 
     public void recordAnalysisLatency(long millis) {
         registry.timer("AnalysisLatencyMs").record(Duration.ofMillis(millis));

@@ -18,7 +18,7 @@ public class S3DocumentReader {
 
     private final S3Client s3Client;
 
-    /** Retorna o tamanho do objeto se ele existir no S3 raw, ou empty caso contrário (spec seção 8). */
+    /** Retorna o tamanho do objeto se ele existir no S3 raw, ou empty caso contrário. */
     public Optional<Long> headObject(String bucket, String objectKey) {
         try {
             HeadObjectResponse response = s3Client.headObject(HeadObjectRequest.builder()

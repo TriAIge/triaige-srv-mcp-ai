@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * (retry de OCR com delay). Suposição assumida: uma única instância do serviço processa a
  * sessão do início ao fim (mesma convenção do Q1 do triaige-srv-orchestrator) — em caso de
  * restart do processo com retries pendentes, o estado em memória é perdido e a sessão fica
- * incompleta; mitigação é fora do escopo desta fase (spec não define reconciliação).
+ * incompleta; mitigação é fora do escopo (spec não define reconciliação).
  */
 public class SessionPipelineState {
 

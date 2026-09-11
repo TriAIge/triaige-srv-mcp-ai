@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 /**
  * Formato real de item devolvido por {@code https://6a2ecdd9c9776ca6c0c4f537.mockapi.io/jurisprudence-mock},
  * distinto do contrato interno {@link JurisprudenceItem} (que também é o formato exposto ao
- * prompt do Gemini, spec seção 6). Mapeado para {@link JurisprudenceItem} em
+ * prompt do Gemini). Mapeado para {@link JurisprudenceItem} em
  * {@link MockApiJurisprudenceClient}.
  */
 @Data

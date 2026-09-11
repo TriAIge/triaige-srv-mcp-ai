@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 /**
- * Subconjunto do schema da seção 6 que o próprio Gemini produz (ver prompt.txt) —
+ * Subconjunto do schema que o próprio Gemini produz (ver prompt.txt) —
  * sessionId/protocolo/areaJuridica/tipoCaso/metadados são preenchidos pelo use case a
  * partir de dados já conhecidos, não confiados ao modelo (reduz risco de o modelo "ecoar"
  * um id incorretamente, e é consistente com a regra de não inventar fatos).
@@ -24,7 +24,7 @@ public class GeminiReportDto {
     private List<RelatorioEstruturado.RiscoIdentificado> riscosIdentificados;
     private RelatorioEstruturado.Recomendacao recomendacao;
 
-    // Fase 4 (schemaVersion "2.0").
+    // (schemaVersion "2.0").
     private RelatorioEstruturado.ClassificacaoInicial classificacaoInicial;
     private RelatorioEstruturado.AvaliacaoCriticidade avaliacaoCriticidade;
     private RelatorioEstruturado.PartesExtraidas partesExtraidas;

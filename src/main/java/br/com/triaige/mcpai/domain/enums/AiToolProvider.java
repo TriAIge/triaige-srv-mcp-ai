@@ -1,6 +1,6 @@
 package br.com.triaige.mcpai.domain.enums;
 
-/** Valores de ai_tool_calls.provider (VARCHAR livre) — agnóstico ao provedor real por design (spec seção 7, nota de risco). */
+/** Valores de ai_tool_calls.provider (VARCHAR livre) — agnóstico ao provedor real por design (nota de risco). */
 public final class AiToolProvider {
 
     public static final String AWS_TEXTRACT = "aws_textract";

@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Suite obrigatória de T2 (spec seção 5.3, Definition of Done): todas as categorias em
+ * Suite obrigatória de T2 (Definition of Done): todas as categorias em
  * formatos variados, falsos positivos conhecidos, e texto sem PII inalterado.
  */
 class AnonymizationServiceTest {

@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-/** Cache de T5 (spec seção 7): chave = SHA-256(teseJuridica normalizada + areaJuridica normalizada). */
+/** Cache de T5: chave = SHA-256(teseJuridica normalizada + areaJuridica normalizada). */
 @Slf4j
 @Service
 @RequiredArgsConstructor

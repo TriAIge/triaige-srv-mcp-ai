@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-/** Objeto gravado em s3://{trustedBucket}/trusted/{lawFirmId}/{sessionId}/{attachmentGroupId}.json (spec seção 5.7). */
+/** Objeto gravado em s3://{trustedBucket}/trusted/{lawFirmId}/{sessionId}/{attachmentGroupId}.json. */
 @Data
 @Builder
 @NoArgsConstructor
@@ -27,7 +27,7 @@ public class TrustedDocumentPayload {
     private boolean resumido;
     private Map<String, Integer> piiRedactedCounts;
     private List<PartOrigem> partesOrigem;
-    /** Preenchido apenas quando ao menos uma parte do grupo falhou em T1/T2 mas outras tiveram sucesso (spec seção 5.8). */
+    /** Preenchido apenas quando ao menos uma parte do grupo falhou em T1/T2 mas outras tiveram sucesso. */
     private List<UUID> partesFaltantes;
     private LocalDateTime processedAt;
 

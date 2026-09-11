@@ -16,8 +16,8 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- * T3 — Agrupamento de Anexos (spec seção 5.4). Concatena as partes já ANONYMIZED de um
- * attachment_group_id na ordem de partNumber, e decide o roteamento T3->T4 (seção 5.5).
+ * T3 — Agrupamento de Anexos. Concatena as partes já ANONYMIZED de um
+ * attachment_group_id na ordem de partNumber, e decide o roteamento T3->T4.
  */
 @Slf4j
 @Service

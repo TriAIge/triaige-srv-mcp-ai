@@ -24,7 +24,7 @@ import org.springframework.stereotype.Service;
 import java.util.Map;
 import java.util.UUID;
 
-/** T1 — orquestra validação de formato, checagem de existência no S3 raw, OCR e registro (spec seção 5.2). */
+/** T1 — orquestra validação de formato, checagem de existência no S3 raw, OCR e registro. */
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -42,7 +42,7 @@ public class OcrService {
      * Executa T1 para um documento. Lança {@link UnsupportedDocumentFormatException} ou
      * {@link RawObjectNotFoundException} (falhas imediatas, sem retry) ou
      * {@link OcrProcessingException} (pode ser retryable) — cabe ao chamador decidir o
-     * roteamento pós-falha (spec seção 5.2/5.8). Em sucesso, atualiza o documento para
+     * roteamento pós-falha. Em sucesso, atualiza o documento para
      * OCR_DONE e devolve o texto extraído (mantido em memória).
      */
     public OcrResult process(UUID sessionId, LegalDocument document) {

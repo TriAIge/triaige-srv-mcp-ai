@@ -12,11 +12,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * T2 — anonimização por regex (spec seção 5.3), migração/adaptação de ex-anonimizador.py
+ * T2 — anonimização por regex, migração/adaptação de ex-anonimizador.py
  * como módulo interno (não é um serviço externo). CPF/CNPJ são validados por dígito
  * verificador (mod 11) para reduzir falsos positivos — as demais categorias não têm
  * checksum disponível e dependem de padrão estrutural/contextual (limitação conhecida,
- * spec seção 10, risco aceito).
+ * risco aceito).
  *
  * <p>Limitações documentadas (deliberadas, para conter falsos positivos):
  * <ul>
@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
  *   <li>RG só é reconhecido quando precedido por um termo de contexto (RG, R.G.,
  *       "registro geral", "identidade"), já que o formato varia por estado e não tem
  *       dígito verificador público.</li>
- *   <li>Nome completo é a categoria mais fraca por natureza (seção 10, risco 1): heurística
+ *   <li>Nome completo é a categoria mais fraca por natureza: heurística
  *       de duas ou mais palavras consecutivas capitalizadas, com uma lista mínima de
  *       termos jurídicos/institucionais para reduzir os falsos positivos mais óbvios.</li>
  * </ul>

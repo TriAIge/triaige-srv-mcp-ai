@@ -20,7 +20,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-/** T4 (spec seção 5.6, Definition of Done): reduz o texto conforme o teto configurado, sem LLM externo. */
+/** T4 (Definition of Done): reduz o texto conforme o teto configurado, sem LLM externo. */
 class SummarizationServiceTest {
 
     private McpProperties mcpProperties;
