@@ -20,8 +20,7 @@ import java.time.Duration;
 import java.util.List;
 
 /**
- * Client HTTP direto à Gemini Generative Language API — sem SDK/spring-ai (spec Fase 3,
- * seção 5.2): timeout 60s, retry em 429/5xx com backoff 2s/8s/20s (3 tentativas), circuit
+ * Client HTTP direto à Gemini Generative Language API — sem SDK/spring-ai: timeout 60s, retry em 429/5xx com backoff 2s/8s/20s (3 tentativas), circuit
  * breaker após 5 falhas consecutivas (todas as tentativas esgotadas) abrindo por 2 min.
  * Modelo configurável via {@code GEMINI_MODEL}, nunca hardcoded. Sem {@code GEMINI_API_KEY}
  * configurada, toda chamada falha explicitamente. Na primeira falha retryable (429/5xx) o

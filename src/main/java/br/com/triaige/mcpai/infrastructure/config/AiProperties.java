@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.List;
 
-/** Propriedades da Fase 3 (spec seções 2, 4, 5) — tudo configurável, nada hardcoded. */
+/** Propriedades — tudo configurável, nada hardcoded. */
 @Data
 @ConfigurationProperties(prefix = "ai")
 public class AiProperties {
@@ -21,7 +21,7 @@ public class AiProperties {
     }
 
     /**
-     * Fase 4, spec seção 2.5: token para autenticar {@code POST /api/ai/v1/analyze} na
+     * Token para autenticar {@code POST /api/ai/v1/analyze} na
      * direção Orchestrator→mcp-ai. Nome de property deliberadamente distinto de
      * {@code mcp.callback.internal-token} (direção oposta, mcp-ai→Orchestrator) para
      * permitir rotação independente.

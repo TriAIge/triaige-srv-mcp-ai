@@ -2,7 +2,7 @@ package br.com.triaige.mcpai.domain.enums;
 
 import lombok.Getter;
 
-/** ai_tool_calls.tool_name (spec Fase 2 seções 5.2-5.4, 5.6, 7; spec Fase 3 seção 5.5) — T1 a T5 + llm_analysis. */
+/** ai_tool_calls.tool_name — T1 a T5 + llm_analysis. */
 @Getter
 public enum AiToolName {
     OCR("ocr"),

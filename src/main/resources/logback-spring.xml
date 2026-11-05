@@ -21,7 +21,7 @@
 
     <!--
         Log de debug de curta retenção (prompt completo / texto anonimizado / resposta do
-        modelo do Gemini) — spec Fase 3, seção 8: "proibido logar ... em log de retenção
+        modelo do Gemini) — "proibido logar ... em log de retenção
         longa; permitido apenas em log de debug de curta retenção (<= 7 dias), separado do
         log estruturado principal". Local (arquivo, não vai para o CloudWatch), nível DEBUG.
     -->

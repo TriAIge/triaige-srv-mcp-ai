@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-/** Payload do callback síncrono ao Orchestrator (spec seção 6). */
+/** Payload do callback síncrono ao Orchestrator. */
 @Data
 @Builder
 @NoArgsConstructor

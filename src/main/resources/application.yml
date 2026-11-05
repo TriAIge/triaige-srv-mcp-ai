@@ -52,7 +52,7 @@ spring:
 server:
   port: ${SERVER_PORT:8084}
 
-# Propriedades específicas do pipeline MCP (spec seções 5, 6, 7).
+# Propriedades específicas do pipeline MCP.
 mcp:
   schema-version-supported: "1.0"
   queue:
@@ -96,9 +96,9 @@ mcp:
     timeout-ms: 5000
     cache-ttl-days: 7
 
-# Propriedades da Fase 3 (spec-fase3-mcp-ai.md, seções 2, 4, 5) — endpoint POST
+# Propriedades — endpoint POST
 # /api/ai/v1/analyze. Chave de nível raiz "ai", sem relação com "spring.ai.mcp" acima (que
-# é do starter do servidor MCP, T5, Fase 2) — namespaces distintos, mesma palavra por
+# é do starter do servidor MCP, T5) — namespaces distintos, mesma palavra por
 # coincidência.
 ai:
   idempotency:

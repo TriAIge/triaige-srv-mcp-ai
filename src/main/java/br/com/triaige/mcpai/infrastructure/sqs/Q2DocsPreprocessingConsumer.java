@@ -16,7 +16,7 @@ import software.amazon.awssdk.services.sqs.model.ReceiveMessageRequest;
 import java.util.List;
 
 /**
- * Consome Q2 (triaige-docs-preprocessing) — spec seção 5.1. Mensagens com schemaVersion
+ * Consome Q2 (triaige-docs-preprocessing). Mensagens com schemaVersion
  * não suportada ou sem documentos NÃO são deletadas (nem tratadas em retry silencioso: o
  * erro é logado a cada tentativa) — após esgotar o maxReceiveCount configurado na fila,
  * a própria SQS as move para a DLQ via redrive policy (infraestrutura), mesma convenção

@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 
 /**
  * Orquestra o pipeline automático T1 -> T2 -> T3 -> (T4 condicional) -> S3 trusted -> callback
- * (spec seção 5). Ponto de entrada tanto do consumidor de Q2 (novo documento) quanto do
+ * Ponto de entrada tanto do consumidor de Q2 (novo documento) quanto do
  * consumidor da fila de retry de OCR (reprocessamento de uma parte específica).
  */
 @Slf4j

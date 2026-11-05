@@ -14,7 +14,7 @@ import java.nio.charset.StandardCharsets;
  * <p>Usa {@code getClass().getClassLoader()} em vez de {@code ResourceLoader}/
  * {@code Thread.currentThread().getContextClassLoader()} de propósito: este método é
  * chamado de dentro de {@code AnalyzeSessionUseCase}, que roda a análise inteira em uma
- * {@code CompletableFuture.supplyAsync} (timeout da spec seção 5.4) — as threads do
+ * {@code CompletableFuture.supplyAsync} — as threads do
  * {@code ForkJoinPool.commonPool()} não herdam o classloader da aplicação (num fat jar
  * Spring Boot, é um {@code LaunchedURLClassLoader} distinto do classloader "de sistema" que
  * essas threads carregam por padrão), então resolver o recurso pelo classloader que

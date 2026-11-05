@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
- * Um registro por etapa (spec seção 5). ocr/anonymization são nível documento
+ * Um registro por etapa. ocr/anonymization são nível documento
  * (documentId preenchido); attachment_grouping/evidence_summarization são nível grupo
  * (attachmentGroupId preenchido) — nunca os dois ao mesmo tempo.
  */

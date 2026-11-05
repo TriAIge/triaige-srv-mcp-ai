@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.stream.Collectors;
 
 /**
- * Trata exceções do endpoint REST de negócio {@code POST /api/ai/v1/analyze} (Fase 3) — o
+ * Trata exceções do endpoint REST de negócio {@code POST /api/ai/v1/analyze} — o
  * único deste serviço; o pipeline T1-T5 (SQS/MCP) não passa por aqui, tem seu próprio
  * tratamento local de erro em cada consumidor/tool.
  */

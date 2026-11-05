@@ -16,7 +16,7 @@ import software.amazon.awssdk.services.sqs.model.ReceiveMessageRequest;
 import java.util.List;
 
 /**
- * Consome triaige-mcp-ocr-retry (spec seção 5.2). Cada mensagem já carrega o
+ * Consome triaige-mcp-ocr-retry. Cada mensagem já carrega o
  * attemptNumber; o próprio {@link DocumentPipelineService} decide, com base nesse número
  * e no limite configurado, se republica com o próximo delay ou marca OCR_FAILED
  * definitivamente. Mensagens não deletadas em caso de erro inesperado são cobertas pelo

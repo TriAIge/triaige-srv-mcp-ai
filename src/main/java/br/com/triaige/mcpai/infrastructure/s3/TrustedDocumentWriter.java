@@ -12,7 +12,7 @@ import software.amazon.awssdk.services.s3.model.S3Exception;
 
 import java.util.UUID;
 
-/** Escrita em S3 trusted, um objeto por attachment_group_id (spec seção 5.7). */
+/** Escrita em S3 trusted, um objeto por attachment_group_id. */
 @Slf4j
 @Component
 @RequiredArgsConstructor

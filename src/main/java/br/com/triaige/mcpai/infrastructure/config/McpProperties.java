@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.List;
 
-/** Propriedades do pipeline MCP (spec seções 5, 6, 7) — tudo configurável, nada hardcoded. */
+/** Propriedades do pipeline MCP — tudo configurável, nada hardcoded. */
 @Data
 @ConfigurationProperties(prefix = "mcp")
 public class McpProperties {

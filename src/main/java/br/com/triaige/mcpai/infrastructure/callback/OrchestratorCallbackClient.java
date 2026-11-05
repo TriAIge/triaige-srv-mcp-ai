@@ -15,7 +15,7 @@ import java.time.Duration;
 import java.util.List;
 
 /**
- * Callback síncrono ao Orchestrator (spec seção 6): {@code POST .../sessions/{sessionId}/mcp-result}
+ * Callback síncrono ao Orchestrator: {@code POST .../sessions/{sessionId}/mcp-result}
  * com {@code X-Internal-Token}. Retry com backoff; se todas as tentativas falharem, publica o
  * mesmo payload na fila de fallback {@code triaige-mcp-callback-dlq} — nunca perde o resultado
  * silenciosamente.

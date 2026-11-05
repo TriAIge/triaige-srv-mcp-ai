@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * T1 — Amazon Textract em modo assíncrono (spec seção 5.2): StartDocumentTextDetection +
+ * T1 — Amazon Textract em modo assíncrono: StartDocumentTextDetection +
  * polling de GetDocumentTextDetection, obrigatório para suportar documentos multi-página.
  * Polling com backoff exponencial (2s -> 15s), timeout total de 5 minutos por documento.
  */

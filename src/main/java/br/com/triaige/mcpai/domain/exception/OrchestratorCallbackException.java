@@ -1,6 +1,6 @@
 package br.com.triaige.mcpai.domain.exception;
 
-/** spec seção 6 — todas as tentativas de callback síncrono ao Orchestrator se esgotaram. */
+/** Todas as tentativas de callback síncrono ao Orchestrator se esgotaram. */
 public class OrchestratorCallbackException extends McpException {
 
     public OrchestratorCallbackException(String message, Throwable cause) {

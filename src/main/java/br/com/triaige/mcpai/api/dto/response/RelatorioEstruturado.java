@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 import java.util.UUID;
 
-/** Schema do relatório estruturado — spec Fase 3, seção 6. */
+/** Schema do relatório estruturado. */
 @Data
 @Builder
 @NoArgsConstructor
@@ -30,7 +30,7 @@ public class RelatorioEstruturado {
     private Recomendacao recomendacao;
     private Metadados metadados;
 
-    // Campos da Fase 4 (schemaVersion "2.0", spec seção 5).
+    // Campos (schemaVersion "2.0").
     private ClassificacaoInicial classificacaoInicial;
     private AvaliacaoCriticidade avaliacaoCriticidade;
     private PartesExtraidas partesExtraidas;
@@ -48,7 +48,7 @@ public class RelatorioEstruturado {
         private String relevancia;
         private String observacao;
         /**
-         * Fase 4: preenchido pelo use case a partir de {@code TrustedDocumentPayload},
+         * Preenchido pelo use case a partir de {@code TrustedDocumentPayload},
          * nunca pedido ao modelo (dado já em mãos, sem custo de LLM).
          */
         private String nomeArquivoOriginal;
@@ -98,7 +98,7 @@ public class RelatorioEstruturado {
         private long tempoProcessamentoMs;
     }
 
-    // ---- Fase 4 (schemaVersion "2.0") ----
+    // ---- (schemaVersion "2.0") ----
 
     @Data
     @Builder

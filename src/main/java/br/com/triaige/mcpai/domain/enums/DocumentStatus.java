@@ -1,6 +1,6 @@
 package br.com.triaige.mcpai.domain.enums;
 
-/** Máquina de estados de legal_documents.status a partir de QUEUED (spec seção 4). */
+/** Máquina de estados de legal_documents.status a partir de QUEUED. */
 public enum DocumentStatus {
     QUEUED,
     OCR_IN_PROGRESS,

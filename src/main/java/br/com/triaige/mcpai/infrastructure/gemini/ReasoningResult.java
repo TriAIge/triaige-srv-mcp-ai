@@ -2,7 +2,7 @@ package br.com.triaige.mcpai.infrastructure.gemini;
 
 import java.util.UUID;
 
-/** Resultado bruto do raciocínio Gemini, antes da validação/parse do relatório estruturado (spec Fase 3, seção 6). */
+/** Resultado bruto do raciocínio Gemini, antes da validação/parse do relatório estruturado. */
 public record ReasoningResult(
         String reportJsonText,
         int toolCallsUsed,

@@ -7,7 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-/** T5 (spec seção 7) — tabela nova desta fase (migration V2, gap de schema seção 3). */
+/** T5 — tabela nova (migration V2, gap de schema). */
 @Entity
 @Table(name = "jurisprudence_cache")
 @Getter

@@ -8,7 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-/** Leitura apenas — areaJuridica/tipoCaso usados como contexto para T4/T5 (spec seção 3). */
+/** Leitura apenas — areaJuridica/tipoCaso usados como contexto para T4/T5. */
 @Entity
 @Table(name = "legal_cases")
 @Getter

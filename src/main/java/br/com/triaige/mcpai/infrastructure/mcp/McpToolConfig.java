@@ -7,7 +7,7 @@ import org.springframework.ai.tool.method.MethodToolCallbackProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-/** Registra as tools MCP expostas por este servidor (spec seção 7 — apenas T5 nesta fase). */
+/** Registra as tools MCP expostas por este servidor (apenas T5). */
 @Configuration
 @RequiredArgsConstructor
 public class McpToolConfig {

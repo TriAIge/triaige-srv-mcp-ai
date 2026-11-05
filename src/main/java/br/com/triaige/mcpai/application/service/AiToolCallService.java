@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
- * Fonte da verdade para toda chamada de tool (T1-T5), spec seção 2.4: request_payload e
+ * Fonte da verdade para toda chamada de tool (T1-T5): request_payload e
  * response_payload NUNCA contêm texto bruto/anonimizado ou PII — só metadados (contagens,
  * referências S3, categorias). Cabe a cada chamador montar um payload já nesse formato;
  * este serviço apenas serializa e persiste.

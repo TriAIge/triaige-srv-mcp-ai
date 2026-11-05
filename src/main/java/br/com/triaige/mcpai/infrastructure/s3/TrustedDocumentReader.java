@@ -10,8 +10,8 @@ import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.GetObjectResponse;
 
 /**
- * Leitura de objetos S3 trusted — contraparte de {@link TrustedDocumentWriter}, usada pela
- * Fase 3 (spec seção 4.2, passo 2) para ler de volta o que este mesmo serviço já escreveu.
+ * Leitura de objetos S3 trusted — contraparte de {@link TrustedDocumentWriter}, usada
+ * para ler de volta o que este mesmo serviço já escreveu.
  */
 @Slf4j
 @Component

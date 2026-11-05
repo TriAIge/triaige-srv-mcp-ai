@@ -12,10 +12,10 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
- * Um registro por etapa (spec seção 5). Para 'ocr'/'anonymization' (nível documento):
+ * Um registro por etapa. Para 'ocr'/'anonymization' (nível documento):
  * documentId preenchido, attachmentGroupId nulo. Para 'attachment_grouping'/
  * 'evidence_summarization' (nível grupo): attachmentGroupId preenchido, documentId nulo
- * (gap de schema da migration V2 — ver seção 3 da spec).
+ * (gap de schema da migration V2).
  */
 @Entity
 @Table(name = "processing_steps")

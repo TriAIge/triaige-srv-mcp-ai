@@ -37,11 +37,11 @@ services:
       MCP_CALLBACK_DLQ_QUEUE_URL: ${MCP_CALLBACK_DLQ_QUEUE_URL}
       ORCHESTRATOR_BASE_URL: ${ORCHESTRATOR_BASE_URL}
       MCP_INTERNAL_TOKEN: ${MCP_INTERNAL_TOKEN}
-      # Fase 4: shared secret do endpoint /api/ai/v1/analyze (direção Orchestrator -> mcp-ai).
+      # Shared secret do endpoint /api/ai/v1/analyze (direção Orchestrator -> mcp-ai).
       # Deve ser o mesmo valor configurado em MCP_ANALYZE_TOKEN no .env do orchestrator.
       MCP_ANALYZE_TOKEN: ${MCP_ANALYZE_TOKEN}
       JURISPRUDENCE_API_ENDPOINT: ${JURISPRUDENCE_API_ENDPOINT}
-      # Fase 3 (spec-fase3-mcp-ai.md) — POST /api/ai/v1/analyze, mesmo serviço/porta.
+      # POST /api/ai/v1/analyze, mesmo serviço/porta.
       GEMINI_API_KEY: ${GEMINI_API_KEY}
       GEMINI_MODEL: ${GEMINI_MODEL}
       GEMINI_FALLBACK_MODEL: ${GEMINI_FALLBACK_MODEL}
