@@ -142,27 +142,67 @@ public class AnalyzeSessionUseCase {
      */
     private ReasoningResult reasonWithFormatRetry(UUID sessionId, AnalysisRequest request, String contexto) {
         ReasoningResult first = geminiReasoningService.reason(sessionId, request.getLegalCase(), contexto);
-        if (isValidFormat(first.reportJsonText())) {
+        String firstProblem = formatProblem(first.reportJsonText());
+        if (firstProblem == null) {
             return first;
         }
-        log.warn("Relatório do Gemini fora do formato esperado, tentando 1 retry de geração: sessionId={}", sessionId);
+        log.warn("Relatório do Gemini fora do formato esperado, tentando 1 retry de geração: sessionId={}, "
+                        + "finishReason={}, motivo={}, inicio={}",
+                sessionId, first.finishReason(), firstProblem, snippet(first.reportJsonText()));
         metrics.incrementInvalidReportFormat();
         ReasoningResult retry = geminiReasoningService.reason(sessionId, request.getLegalCase(), contexto);
-        if (isValidFormat(retry.reportJsonText())) {
+        String retryProblem = formatProblem(retry.reportJsonText());
+        if (retryProblem == null) {
             return retry;
         }
+        log.warn("Relatório do Gemini fora do formato esperado no retry: sessionId={}, finishReason={}, motivo={}, inicio={}",
+                sessionId, retry.finishReason(), retryProblem, snippet(retry.reportJsonText()));
         metrics.incrementInvalidReportFormat();
         throw new InvalidReportFormatException("Relatório do Gemini não pôde ser interpretado após 1 retry de geração");
     }
 
-    private boolean isValidFormat(String reportJsonText) {
+    /** Retorna o motivo da rejeição, ou null se o relatório estiver válido. */
+    private String formatProblem(String reportJsonText) {
         GeminiReportDto raw;
         try {
-            raw = objectMapper.readValue(reportJsonText, GeminiReportDto.class);
+            raw = objectMapper.readValue(extractJson(reportJsonText), GeminiReportDto.class);
         } catch (Exception e) {
-            return false;
+            return "parse: " + abbreviate(String.valueOf(e.getMessage()), 300);
         }
-        return isConfiancaValid(raw) && isNivelAtendimentoValid(raw);
+        if (!isConfiancaValid(raw)) {
+            return "confianca fora de [0,100]";
+        }
+        if (!isNivelAtendimentoValid(raw)) {
+            return "nivelAtendimentoSugerido fora do enum: " + raw.getClassificacaoInicial().getNivelAtendimentoSugerido();
+        }
+        return null;
+    }
+
+    /**
+     * Isola o objeto JSON do texto do Gemini. Com a tool de jurisprudência ativa, a chamada não
+     * usa responseMimeType=application/json (a API não permite junto com function calling), e o
+     * modelo às vezes envolve o relatório em cerca markdown (```json ... ```) ou escreve uma
+     * frase antes/depois. Pega do primeiro '{' ao último '}'.
+     */
+    static String extractJson(String text) {
+        if (text == null) {
+            return null;
+        }
+        int start = text.indexOf('{');
+        int end = text.lastIndexOf('}');
+        if (start < 0 || end < start) {
+            return text.strip();
+        }
+        return text.substring(start, end + 1);
+    }
+
+    /** Início da resposta para diagnóstico no log (o texto enviado ao Gemini já é anonimizado). */
+    private static String snippet(String text) {
+        return text == null ? "null" : abbreviate(text.strip().replaceAll("\\s+", " "), 300);
+    }
+
+    private static String abbreviate(String text, int max) {
+        return text.length() <= max ? text : text.substring(0, max) + "...";
     }
 
     private boolean isConfiancaValid(GeminiReportDto raw) {
@@ -192,7 +232,7 @@ public class AnalyzeSessionUseCase {
                                                  Map<UUID, String> nomesArquivoPorGrupo) {
         GeminiReportDto raw;
         try {
-            raw = objectMapper.readValue(reasoningResult.reportJsonText(), GeminiReportDto.class);
+            raw = objectMapper.readValue(extractJson(reasoningResult.reportJsonText()), GeminiReportDto.class);
         } catch (Exception e) {
             throw new InvalidReportFormatException("Relatório do Gemini não pôde ser interpretado: " + e.getMessage());
         }

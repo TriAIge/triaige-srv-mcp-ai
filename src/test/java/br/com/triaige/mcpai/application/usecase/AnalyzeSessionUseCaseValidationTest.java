@@ -138,6 +138,31 @@ class AnalyzeSessionUseCaseValidationTest {
     }
 
     @Test
+    void relatorioEmCercaMarkdown_eAceitoSemRetry() {
+        String fenced = "```json\n" + validReportJsonWith("") + "\n```";
+        ReasoningResult result = new ReasoningResult(fenced, 0, null, 10, 10, "STOP");
+        when(geminiReasoningService.reason(any(), any(), anyString())).thenReturn(result);
+
+        AnalysisResponse response = useCase.execute(buildRequest());
+
+        assertThat(response.getRelatorioEstruturado().getRecomendacao().getClassificacao()).isEqualTo("viavel");
+        verify(geminiReasoningService, times(1)).reason(any(), any(), anyString());
+    }
+
+    @Test
+    void relatorioComTextoAntesEDepois_eAceitoSemRetry() {
+        String wrapped = "Segue o relatório solicitado:\n```json\n" + validReportJsonWith("")
+                + "\n```\nQualquer dúvida, estou à disposição.";
+        ReasoningResult result = new ReasoningResult(wrapped, 0, null, 10, 10, "STOP");
+        when(geminiReasoningService.reason(any(), any(), anyString())).thenReturn(result);
+
+        AnalysisResponse response = useCase.execute(buildRequest());
+
+        assertThat(response.getRelatorioEstruturado().getRecomendacao().getClassificacao()).isEqualTo("viavel");
+        verify(geminiReasoningService, times(1)).reason(any(), any(), anyString());
+    }
+
+    @Test
     void schemaV2Valido_produzRelatorioComSchemaVersion2ENomeArquivoInjetado() {
         String validJson = validReportJsonWith("""
                 "classificacaoInicial": { "foroCompetenteEstimado": "Comarca X", "nivelAtendimentoSugerido": "pleno", "equipeResponsavelSugerida": "Equipe cível" },
